@@ -4,11 +4,24 @@
 }
 /* 月份切换 */
 .current_month {
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
   height: 127rpx;
-  align-items: center;
   padding: 0 24rpx;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.curr_month {
+  text-align: center;
+  width: 60%;
+}
+.last_month {
+  width: 20%;
+  text-align: left;
+}
+.next_month {
+  width: 20%;
+  text-align: right;
 }
 .last_month, .next_month {
   font-size: 25rpx;

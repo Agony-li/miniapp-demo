@@ -7,15 +7,20 @@ Page({
   data: {
     currentYear: new Date().getFullYear(), // 当前年
     currentMonth: new Date().getMonth() + 1, // 当前月
+    lastYear: '', // 上一年
     lastMonth: '', // 上一个月
+    nextYear: '', // 下一年
     nextMonth: '', // 下一个月
     allDateArr: [], // 当前月所有的数据
     currentDateArr: [], // 当前月有效数据
     lastInvalidDaysArr: [], // 当前月之前无效日期
     nextInvalidDaysArr: [], // 当前月之后无效日期
 
+    mindate: '2020-12-07',
+    maxdate: '2021-07-07',
     chooseDateArr: [
-      '2020-12-13'
+      '2020-12-13',
+      '2020-12-01',
     ], // 当前月选中的日期
   },
 
@@ -33,7 +38,13 @@ Page({
     // 改变选中日期的状态
     for (let i = 0; i < currentDateArr.length; i++) {
       for (let j = 0; j < chooseDateArr.length; j++) {
-        if(currentDateArr[i].date == new Date(chooseDateArr[j]).getDate()){
+        // 对比年 月 日
+        // let currentYear = new Date(currentDateArr[i].date).getFullYear()
+        let currentYear = this.data.currentYear // 当前年
+        let currentMonth = this.data.currentMonth // 当前月
+        let chooseYear = new Date(chooseDateArr[j]).getFullYear() // 选中的年
+        let chooseMonth = new Date(chooseDateArr[j]).getMonth() + 1 // 选中的年
+        if(currentYear == chooseYear && currentMonth==chooseMonth && currentDateArr[i].dateNum == new Date(chooseDateArr[j]).getDate()){
           currentDateArr[i].choose = 'choose'
         }
       }
@@ -44,11 +55,20 @@ Page({
   initData(){
     let lastMonth = this.data.currentMonth - 1 < 1 ? 12 : this.data.currentMonth - 1
     let nextMonth = this.data.currentMonth + 1 > 12 ? 1 : this.data.currentMonth + 1
+    let lastYear = this.data.currentYear-1
+    let nextYear = this.data.currentYear+1
     this.setData({
+      lastYear,
+      nextYear,
       lastMonth,
       nextMonth,
     })
   }, 
+
+  // 无上一个月 和 无下一个月
+  noLastMonthOrNoNextMonth(mindate, maxdate){
+
+  },
 
   // 切换上一个月
   cutLastMonth(){
@@ -87,7 +107,7 @@ Page({
     this.initData()
     this.getCurrentMonthDateArr()
   },
-  
+
 
   // 1. 计算某年某月的天数
   getMonthDays(year, month) {
@@ -97,7 +117,7 @@ Page({
 
   // 2. 获取某月一号是周几
   getFirstDayWeek(year, month){
-    console.log('获取某月一号是周几', new Date(year, month-1, 1).getDay())
+    console.log('获取某 月一号是周几', new Date(year, month-1, 1).getDay())
     return new Date(year, month-1, 1).getDay()
   },
 
@@ -108,7 +128,12 @@ Page({
     let currentDateArr = []
     // 选中的日期
     for (let i = 1; i < currentMonthDays + 1; i++) {
-      currentDateArr.push({month: 'valid', date: i, choose: ''}) // 当月的有效数据
+      currentDateArr.push({
+        month: 'valid', 
+        dateNum: i, 
+        date: this.data.currentYear+'-'+this.data.currentMonth+'-'+i,
+        choose: ''
+      }) // 当月的有效数据
     }
     this.updateCurrentDateArr(currentDateArr)
     this.setData({
@@ -144,7 +169,7 @@ Page({
       let { year, month } = this.preMonth(this.data.currentYear, this.data.currentMonth) // 获取上月 年、月
       let date = this.getMonthDays(year, month) // 获取上月天数
       for (let i = 0; i < lastInvalidDays; i++) {
-        lastInvalidDaysArr.unshift({month: 'invalid', date: date})
+        lastInvalidDaysArr.unshift({month: 'invalid', dateNum: date})
         date--
       }
     }
@@ -161,7 +186,7 @@ Page({
     let nextInvalidDaysArr = []
     if (nextInvalidDays > 0) {
       for (let i = 1; i < nextInvalidDays+1; i++) {
-        nextInvalidDaysArr.push({month: 'invalid', date: i})
+        nextInvalidDaysArr.push({month: 'invalid', dateNum: i})
       }
     }
     this.setData({

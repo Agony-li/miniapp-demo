@@ -3,13 +3,17 @@
   <!-- 月份切换 -->
   <view class="current_month">
     <view class="last_month" bindtap="cutLastMonth">
-      <image src="../../image/left.png"></image>
-      <text>{{filter.perfectMonth(lastMonth)}}月</text>
+      <block wx:if="{{lastMonth}}">
+        <image src="../../image/left.png"></image>
+        <text>{{filter.perfectMonth(lastMonth)}}月</text>
+      </block>
     </view>
     <view class="curr_month">{{currentYear}}年{{filter.perfectMonth(currentMonth)}}月</view>
     <view class="next_month" bindtap="cutNextMonth">
-      <text>{{filter.perfectMonth(nextMonth)}}月</text>
-      <image src="../../image/right.png"></image>
+      <block wx:if="{{nextMonth}}">
+        <text>{{filter.perfectMonth(nextMonth)}}月</text>
+        <image src="../../image/right.png"></image>
+      </block>
     </view>
   </view>
   <!-- 星期 -->
@@ -24,6 +28,6 @@
   </view>
   <!-- 日期 -->
   <view class="date">
-    <view wx:for="{{allDateArr}}" wx:key="index" class="{{item.month}} {{item.choose}}">{{item.date}}</view>
+    <view wx:for="{{allDateArr}}" wx:key="index" class="{{item.month}} {{item.choose}}">{{item.dateNum}}</view>
   </view>
 </view>
