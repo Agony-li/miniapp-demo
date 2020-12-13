@@ -1,0 +1,54 @@
+.calendar {
+  background-color: pink;
+  margin: 24rpx 24rpx;
+}
+/* 月份切换 */
+.current_month {
+  display: flex;
+  justify-content: space-between;
+  height: 127rpx;
+  align-items: center;
+  padding: 0 24rpx;
+}
+.last_month, .next_month {
+  font-size: 25rpx;
+}
+.last_month text, .next_month text {
+  padding: 0 11rpx;
+}
+.last_month image, .next_month image {
+  width: 11rpx;
+  height: 18rpx;
+}
+.curr_month {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+/* 星期 */
+.week{
+  display: flex;
+}
+.week view {
+  width: 100rpx;
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 25rpx;
+}
+
+/* 日期 */
+.date view{
+  display: inline-block;
+  width: 100rpx;
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 25rpx;
+}
+.invalid {
+  color: #999999;
+}
+.choose {
+  background-color: #36BC96;
+}

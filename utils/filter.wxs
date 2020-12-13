@@ -1,0 +1,9 @@
+
+// 月份补0操作
+var perfectMonth = function(month){
+  return month < 10 ? '0'+month : month
+}
+
+module.exports = {
+  perfectMonth: perfectMonth
+}
