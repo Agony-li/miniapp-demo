@@ -13,7 +13,7 @@ Page({
      * 音频信息
      */
     isPlay: 0, // 播放状态 0:未播放 1:已播放
-    duration: 0, // 时长 s(秒) 
+    duration: '00:00', // 时长 s(秒) 
     value: 0, // 当前时间
   },
 
@@ -22,6 +22,19 @@ Page({
    */
   onLoad: function (options) {
     audioContext.src = "https://m10.music.126.net/20201211155742/87788631fca77989e0753524fc0e848f/ymusic/075a/0f53/510c/0046f03b288990652a63ff79f9136840.mp3"
+    // 监听音频自然播放至结束的事件
+    audioContext.onEnded(() => {
+      console.log('音频自然播放结束');
+    })
+    wx.setInnerAudioOption({
+      obeyMuteSwitch: false,
+      success: (res)=>{
+        console.log(res);
+      },
+      fail: (err)=>{
+        console.log(err);
+      },
+    })
   },
   // 初始化数据
   init(that) {
@@ -87,23 +100,29 @@ Page({
 
   // 播放音频事件
   playAudio() {
+    // console.log('播放音频事件')
     audioContext.play()
     audioContext.onPlay(() => {
+      console.log('播放音频事件')
       this.setData({
         isPlay: 1
       })
     })
     audioContext.onTimeUpdate(() => {
       let timeDuration = util.times_to_minutesAndTimes(audioContext.duration)
+      // this.setData({
+      //   duration: timeDuration,
+      //   max: audioContext.duration
+      // })
       this.setData({
-        duration: timeDuration,
+        duration: util.times_to_minutesAndTimes(audioContext.duration-this.data.value),
         max: audioContext.duration
       })
-
     })
     // 开始倒计时
     this.startTap()
   },
+
   // 暂停音频事件
   playPause() {
     audioContext.pause()
@@ -115,6 +134,8 @@ Page({
     // 暂停倒计时
     this.stopTap()
   },
+
+  
 
   /**
    * 生命周期函数--监听页面初次渲染完成
