@@ -66,6 +66,13 @@
 					"id": -1,
 					"name": "音频",
 					"pathName": "pages/audio/audio",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "背景音频",
+					"pathName": "pages/bgAudio/bgAudio",
 					"scene": null
 				}
 			]

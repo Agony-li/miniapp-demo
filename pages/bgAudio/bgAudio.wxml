@@ -1,0 +1,17 @@
+<view>
+  <view class="audo">
+    <view class="audio_image">
+      <image wx:if="{{isPlay==0}}" src="../../image/play.png" bindtap="playAudio"></image>
+      <image wx:else src="../../image/pause.png" bindtap="playPause"></image>
+    </view>
+    <view class="audio_info">
+      <view class="audio_title">喝醉了才知道自己爱谁</view>
+      <view class="audio_silder">
+        <!-- <view class="runtime">{{value}}</view> -->
+        <slider class="slider" disabled="true" max="{{max}}" value="{{value}}" block-size="12"></slider>
+        <view class="alltime">{{duration}}</view>
+      </view>
+      <view class="audio_author">小栗旬</view>
+    </view>
+  </view>
+</view>
