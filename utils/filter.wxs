@@ -1,7 +1,7 @@
 
 // 月份补0操作
-var perfectMonth = function(month){
-  // var month = getDate(date).getMonth() + 1
+var perfectMonth = function(yearmonth){
+  var month = yearmonth.split('-')[1]
   return month < 10 ? '0'+month : month
 }
 

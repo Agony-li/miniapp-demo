@@ -3,15 +3,15 @@
   <!-- 月份切换 -->
   <view class="current_month">
     <view class="last_month" bindtap="cutLastMonth">
-      <block wx:if="{{lastMonth}}">
+      <block wx:if="{{lastYearMonth}}">
         <image src="../../image/left.png"></image>
-        <text>{{filter.perfectMonth(lastMonth)}}月</text>
+        <text>{{filter.perfectMonth(lastYearMonth)}}月</text>
       </block>
     </view>
-    <view class="curr_month">{{currentYear}}年{{filter.perfectMonth(currentMonth)}}月</view>
+    <view class="curr_month">{{currentYear}}年{{currentMonth}}月</view>
     <view class="next_month" bindtap="cutNextMonth">
-      <block wx:if="{{nextMonth}}">
-        <text>{{filter.perfectMonth(nextMonth)}}月</text>
+      <block wx:if="{{nextYearMonth}}">
+        <text>{{filter.perfectMonth(nextYearMonth)}}月</text>
         <image src="../../image/right.png"></image>
       </block>
     </view>

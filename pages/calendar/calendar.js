@@ -7,10 +7,8 @@ Page({
   data: {
     currentYear: new Date().getFullYear(), // 当前年
     currentMonth: new Date().getMonth() + 1, // 当前月
-    lastYear: '', // 上一年
-    lastMonth: '', // 上一个月
-    nextYear: '', // 下一年
-    nextMonth: '', // 下一个月
+    lastYearMonth: '', // 上一个月
+    nextYearMonth: '', // 下一个月
     allDateArr: [], // 当前月所有的数据
     currentDateArr: [], // 当前月有效数据
     lastInvalidDaysArr: [], // 当前月之前无效日期
@@ -55,20 +53,18 @@ Page({
   initData(){
     let lastMonth = this.data.currentMonth - 1 < 1 ? 12 : this.data.currentMonth - 1
     let nextMonth = this.data.currentMonth + 1 > 12 ? 1 : this.data.currentMonth + 1
-    let lastYear = this.data.currentYear-1
-    let nextYear = this.data.currentYear+1
+    let lastYearMonth = lastMonth == 12 ? (this.data.currentYear-1) + '-12':this.data.currentYear+'-'+ lastMonth
+    let nextYearMonth = nextMonth == 1 ? (this.data.currentYear+1) + '-' + nextMonth : this.data.currentYear+'-'+nextMonth
+    console.log('lastYearMonth: '+lastYearMonth);
+    console.log('nextYearMonth: '+nextYearMonth);
+    console.log('mindate: '+this.data.mindate);
+    console.log('maxdate: '+this.data.maxdate);
     this.setData({
-      lastYear,
-      nextYear,
-      lastMonth,
-      nextMonth,
+      lastYearMonth,
+      nextYearMonth 
     })
   }, 
 
-  // 无上一个月 和 无下一个月
-  noLastMonthOrNoNextMonth(mindate, maxdate){
-
-  },
 
   // 切换上一个月
   cutLastMonth(){
