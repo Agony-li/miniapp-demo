@@ -21,20 +21,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    audioContext.src = "https://m10.music.126.net/20201211155742/87788631fca77989e0753524fc0e848f/ymusic/075a/0f53/510c/0046f03b288990652a63ff79f9136840.mp3"
+    audioContext.src = "http://music.163.com/song/media/outer/url?id=1396186820.mp3"
     // 监听音频自然播放至结束的事件
-    // audioContext.onEnded(() => {
-    //   console.log('音频自然播放结束');
-    // })
-    // wx.setInnerAudioOption({
-    //   obeyMuteSwitch: false,
-    //   success: (res)=>{
-    //     console.log(res);
-    //   },
-    //   fail: (err)=>{
-    //     console.log(err);
-    //   },
-    // })
+    audioContext.onEnded(() => {
+      console.log('音频自然播放结束');
+    })
+    wx.getBackgroundAudioManager()
+    wx.setInnerAudioOption({
+      obeyMuteSwitch: false,
+      success: (res)=>{
+        console.log(res);
+      },
+      fail: (err)=>{
+        console.log(err);
+      },
+    })
   },
   // 初始化数据
   init(that) {
@@ -110,14 +111,14 @@ Page({
     })
     audioContext.onTimeUpdate(() => {
       let timeDuration = util.times_to_minutesAndTimes(audioContext.duration)
-      this.setData({
-        duration: timeDuration,
-        max: audioContext.duration
-      })
       // this.setData({
-      //   duration: util.times_to_minutesAndTimes(audioContext.duration-this.data.value),
+      //   duration: timeDuration,
       //   max: audioContext.duration
       // })
+      this.setData({
+        duration: util.times_to_minutesAndTimes(audioContext.duration-this.data.value),
+        max: audioContext.duration
+      })
     })
     // 开始倒计时
     this.startTap()
