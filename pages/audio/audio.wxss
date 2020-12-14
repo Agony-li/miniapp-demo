@@ -1,0 +1,48 @@
+/* pages/audio/audio.wxss */
+.audo {
+  display: flex;
+  width: 80%;
+  height: 150rpx;
+  margin: 100rpx auto;
+  align-items: center;
+  background-color: pink;
+  padding: 50rpx 0;
+  box-sizing: border-box;
+}
+.audio_image {
+  display: flex;
+  width: 20%;
+}
+.audio_image image{
+  width: 100rpx;
+  height: 100rpx;
+}
+.audio_info {
+  width: 80%;
+}
+.audio_title {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+.audio_silder {
+  display: flex;
+  align-items: center;
+}
+.runtime {
+  width: 10%;
+  font-size: 18rpx;
+  text-align: center;
+}
+.alltime {
+  width: 20%;
+  font-size: 18rpx;
+  text-align: center;
+}
+.audio_author {
+  font-size: 24rpx;
+}
+.slider {
+  margin: 0;
+  width: 80%;
+  display: inline-block;
+}

@@ -14,6 +14,13 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+// 秒转换成分秒
+const times_to_minutesAndTimes = duration=>{
+  let minutes = parseInt(duration/60) < 10 ? '0'+parseInt(duration/60): parseInt(duration/60)
+  return minutes+":"+parseInt(duration-parseInt(duration/60)*60)
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  times_to_minutesAndTimes: times_to_minutesAndTimes
 }
