@@ -16,6 +16,9 @@ const formatNumber = n => {
 
 // 秒转换成分秒
 const times_to_minutesAndTimes = duration=>{
+  if (duration == 0) {
+    return '00:00'
+  }
   let minutes = parseInt(duration/60) < 10 ? '0'+parseInt(duration/60): parseInt(duration/60)
   let second = parseInt(duration-parseInt(duration/60)*60) < 10 ? '0'+ parseInt(duration-parseInt(duration/60)*60) : parseInt(duration-parseInt(duration/60)*60)
   return minutes+":"+second

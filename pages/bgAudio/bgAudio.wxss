@@ -3,11 +3,16 @@
   display: flex;
   width: 80%;
   height: 150rpx;
-  margin: 100rpx auto;
+  margin: 20rpx auto 80px;
   align-items: center;
   background-color: pink;
   padding: 50rpx 0;
   box-sizing: border-box;
+}
+.title {
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
 }
 .audio_image {
   display: flex;

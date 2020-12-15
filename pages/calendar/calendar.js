@@ -60,10 +60,30 @@ Page({
     console.log('mindate: '+this.data.mindate);
     console.log('maxdate: '+this.data.maxdate);
     this.setData({
-      lastYearMonth,
-      nextYearMonth 
+      lastYearMonth: this.isHaveLastMonth(lastYearMonth, this.data.mindate) ? lastYearMonth : '',
+      nextYearMonth: this.isHaveNextMonth(nextYearMonth, this.data.maxdate) ? nextYearMonth : '',
     })
   }, 
+
+  // 是否含有上个月
+  isHaveLastMonth(oneDate, twoDate){
+    let oneTimes = new Date(this.fillZero(oneDate)).getTime()
+    let twoTimes = new Date(this.fillZero(twoDate)).getTime()
+    return oneTimes >= twoTimes
+  },
+  // 是否含有下个月
+  isHaveNextMonth(oneDate, twoDate){
+    let oneTimes = new Date(this.fillZero(oneDate)).getTime()
+    let twoTimes = new Date(this.fillZero(twoDate)).getTime()
+    return oneTimes <= twoTimes
+  },
+  
+  // 日期补0操作 (兼容有的月份不带有0, 无法进行对比)
+  fillZero(date){
+    let year = new Date(date).getFullYear()
+    let month = new Date(date).getMonth() + 1
+    return year+'-'+ (month < 10 ? '0'+month : month)
+  },
 
 
   // 切换上一个月

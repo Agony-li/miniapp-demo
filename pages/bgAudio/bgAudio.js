@@ -7,11 +7,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    max: 98,
-    interval: '',
     /**
      * 音频信息
      */
+    bgAudio: {
+      src: 'https://music.163.com/song/media/outer/url?id=32526653.mp3', // 音频链接
+      title: '冰与火之歌', // 标题
+      singer: 'Ramin Djawadi' // 作者
+    }, // 音频属性
+    max: 105, // 后台返回的音频时长 s
+    interval: '',
     isPlay: 0, // 播放状态 0:未播放 1:已播放
     duration: '00:00', // 时长 s(秒) 
     value: 0, // 当前时间
@@ -25,6 +30,10 @@ Page({
     // 监听音频自然播放至结束的事件
     bgAudioManager.onEnded(() => {
       console.log('音频自然播放结束');
+      this.setData({
+        value: 0,
+        duration: '00:00'
+      })
     })
     wx.getBackgroundAudioManager()
     wx.setInnerAudioOption({
@@ -36,6 +45,26 @@ Page({
         console.log(err);
       },
     })
+
+    // 音频播放事件
+    bgAudioManager.onPlay(() => {
+      console.log('播放音频事件')
+      this.setData({
+        isPlay: 1,
+      })
+    })
+    // 音频暂停事件
+    bgAudioManager.onPause(() => {
+      console.log('暂停音频事件')
+      this.setData({
+        isPlay: 0,
+      })
+    })
+    // bgAudioManager.onTimeUpdate(() => {
+    //   this.setData({
+    //     max: bgAudioManager.duration,
+    //   })
+    // })
   },
   // 初始化数据
   init(that) {
@@ -78,13 +107,13 @@ Page({
   startTap: function () {
     var that = this;
     that.init(that); //这步很重要，没有这步，重复点击会出现多个定时器
-    var value = that.data.value;
-    console.log("倒计时开始"+value)
+    // console.log("倒计时开始"+value)
     var interval = setInterval(function () {
+      var value = that.data.value;
       value++;
       that.setData({
         value: value,
-        duration: util.times_to_minutesAndTimes(that.data.max - value),
+        duration: that.timesToMinutesAndTimes(that.data.max - value),
       })
       if (value >= that.data.max) { //归0时回到60
         console.log('初始化数据')
@@ -99,49 +128,50 @@ Page({
       interval: interval
     })
   },
+  // 秒转换成 分:秒 (需要小时自己扩展)
+  timesToMinutesAndTimes(duration){
+    if (duration == 0) {
+      return '00:00'
+    }
+    let minutes = parseInt(duration/60) < 10 ? '0'+parseInt(duration/60): parseInt(duration/60)
+    let second = parseInt(duration-parseInt(duration/60)*60) < 10 ? '0'+ parseInt(duration-parseInt(duration/60)*60) : parseInt(duration-parseInt(duration/60)*60)
+    return minutes+":"+second
+  },
 
   // 播放音频事件
   playAudio() {
-    // console.log('播放音频事件')
-    bgAudioManager.src = 'http://music.163.com/song/media/outer/url?id=1396186820.mp3'
-    bgAudioManager.title = '喝醉了才知道自己爱谁'
-    bgAudioManager.singer = '小栗旬'
-    bgAudioManager.play()
-    bgAudioManager.onPlay(() => {
-      console.log('播放音频事件')
+    bgAudioManager.src = this.data.bgAudio.src
+    bgAudioManager.title = this.data.bgAudio.title
+    bgAudioManager.singer = this.data.bgAudio.singer
+    if(this.data.value == 0){
+      bgAudioManager.play()
+    }else{
+      bgAudioManager.seek(this.data.value)
       this.setData({
-        isPlay: 1,
-        duration: util.times_to_minutesAndTimes(this.data.max)
+        duration: this.timesToMinutesAndTimes(this.data.max - this.data.value),
       })
-    })
-    
-    bgAudioManager.onTimeUpdate(() => {
-      // let timeDuration = util.times_to_minutesAndTimes(bgAudioManager.duration)
-      // this.setData({
-      //   duration: timeDuration,
-      //   max: bgAudioManager.duration
-      // })
-      // this.setData({
-      //   duration: util.times_to_minutesAndTimes(bgAudioManager.duration-this.data.value),
-      //   max: bgAudioManager.duration
-      // })
-    })
+    }
     // 开始倒计时
-    this.startTap()
+    this.data.isPlay == 0 ? this.startTap():''
   },
 
   // 暂停音频事件
   playPause() {
     bgAudioManager.pause()
-    bgAudioManager.onPause(() => {
-      this.setData({
-        isPlay: 0
-      })
-    })
     // 暂停倒计时
-    this.stopTap()
+    this.data.isPlay == 1 ? this.stopTap():''
   },
 
+  // 拖动进度条
+  changeSlider(e){
+    let that = this
+    let value = e.detail.value
+    bgAudioManager.seek(value)
+    that.setData({
+      value: value,
+      duration: that.timesToMinutesAndTimes(that.data.max - value),
+    })
+  },
   
 
   /**

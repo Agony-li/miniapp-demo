@@ -1,17 +1,35 @@
 <view>
+  <view class="title">不可以拖动进度条</view>
   <view class="audo">
     <view class="audio_image">
       <image wx:if="{{isPlay==0}}" src="../../image/play.png" bindtap="playAudio"></image>
       <image wx:else src="../../image/pause.png" bindtap="playPause"></image>
     </view>
     <view class="audio_info">
-      <view class="audio_title">喝醉了才知道自己爱谁</view>
+      <view class="audio_title">{{bgAudio.title}}</view>
       <view class="audio_silder">
-        <!-- <view class="runtime">{{value}}</view> -->
+        <!-- 不可拖动进度条 -->
         <slider class="slider" disabled="true" max="{{max}}" value="{{value}}" block-size="12"></slider>
         <view class="alltime">{{duration}}</view>
       </view>
-      <view class="audio_author">小栗旬</view>
+      <view class="audio_author">{{bgAudio.singer}}</view>
+    </view>
+  </view>
+
+  <view class="title">可以拖动进度条</view>
+  <view class="audo">
+    <view class="audio_image">
+      <image wx:if="{{isPlay==0}}" src="../../image/play.png" bindtap="playAudio"></image>
+      <image wx:else src="../../image/pause.png" bindtap="playPause"></image>
+    </view>
+    <view class="audio_info">
+      <view class="audio_title">{{bgAudio.title}}</view>
+      <view class="audio_silder">
+        <!-- 可以拖动进度条 -->
+        <slider class="slider" max="{{max}}" value="{{value}}" block-size="12" bindchange="changeSlider"></slider>
+        <view class="alltime">{{duration}}</view>
+      </view>
+      <view class="audio_author">{{bgAudio.singer}}</view>
     </view>
   </view>
 </view>

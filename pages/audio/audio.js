@@ -21,7 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    audioContext.src = "http://music.163.com/song/media/outer/url?id=1396186820.mp3"
+    audioContext.src = "https://music.163.com/song/media/outer/url?id=32526653.mp3"
     // 监听音频自然播放至结束的事件
     audioContext.onEnded(() => {
       console.log('音频自然播放结束');
