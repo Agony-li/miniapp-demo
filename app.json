@@ -4,6 +4,7 @@
     "pages/calendar/calendar",
     "pages/audio/audio",
     "pages/bgAudio/bgAudio",
+    "pages/video/video",
     "pages/logs/logs"
   ],
   "window":{
