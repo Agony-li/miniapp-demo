@@ -1,5 +1,4 @@
 // pages/audio/audio.js
-const util = require('../../utils/util.js')
 const bgAudioManager = wx.getBackgroundAudioManager()
 Page({
 
